@@ -2,91 +2,74 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as pescadorControl
 
-#Definido as coisas que variam (populamente conhecidas como variaveis)
+# Definido as coisas que variam (populamente conhecidas como variaveis)
 
-Distancia = pescadorControl.Antecedent(np.arange(0,31,1),"Distancia")     
-Curvatura = pescadorControl.Antecedent(np.arange(0,46,1),"Curvatura")       
+Distancia = pescadorControl.Antecedent(np.arange(0, 31, 1), "Distancia")
+Curvatura = pescadorControl.Antecedent(np.arange(0, 46, 1), "Curvatura")
 
-Velocidade = pescadorControl.Consequent(np.arange(0,101,1), "Velocidade")
+Velocidade = pescadorControl.Consequent(np.arange(0, 101, 1), "Velocidade")
 
-#Faixas de valores 
+# Faixas de valores
 
-Distancia['perto'] = fuzz.trimf(Distancia.universe,[0,5,10])
-Distancia['media'] = fuzz.trimf(Distancia.universe,[9,15,20])
-Distancia['longe'] = fuzz.trimf(Distancia.universe,[19,25,30])
+Distancia["perto"] = fuzz.trimf(Distancia.universe, [0, 5, 10])
+Distancia["media"] = fuzz.trimf(Distancia.universe, [9, 15, 20])
+Distancia["longe"] = fuzz.trimf(Distancia.universe, [19, 25, 30])
 
-Curvatura['reta'] = fuzz.trimf(Curvatura.universe,[0,7.5,15])
-Curvatura['leve'] = fuzz.trimf(Curvatura.universe,[15,22.5,30])
-Curvatura['acentuada'] = fuzz.trimf(Curvatura.universe,[30,37.5,45])
+Curvatura["reta"] = fuzz.trimf(Curvatura.universe, [0, 7.5, 15])
+Curvatura["leve"] = fuzz.trimf(Curvatura.universe, [15, 22.5, 30])
+Curvatura["acentuada"] = fuzz.trimf(Curvatura.universe, [30, 37.5, 45])
 
-Velocidade['baixa'] = fuzz.trimf(Velocidade.universe,[0,20,40])
-Velocidade['media'] = fuzz.trimf(Velocidade.universe,[30,50,70])
-Velocidade['alta'] = fuzz.trimf(Velocidade.universe,[60,80,100])
+Velocidade["baixa"] = fuzz.trimf(Velocidade.universe, [0, 20, 40])
+Velocidade["media"] = fuzz.trimf(Velocidade.universe, [30, 50, 70])
+Velocidade["alta"] = fuzz.trimf(Velocidade.universe, [60, 80, 100])
 
-#Regras dos Amigos
+# Regras dos Amigos
 
-Regra1 = pescadorControl.Rule(Distancia['perto'] & Curvatura['acentuada'], Velocidade['baixa'])
-Regra2 = pescadorControl.Rule(Distancia['longe'] & Curvatura['reta'], Velocidade['alta'])
+Regras = [
+    pescadorControl.Rule(Distancia["perto"] & Curvatura["reta"], Velocidade["media"]),
+    pescadorControl.Rule(Distancia["perto"] & Curvatura["leve"], Velocidade["baixa"]),
+    pescadorControl.Rule(
+        Distancia["perto"] & Curvatura["acentuada"], Velocidade["baixa"]
+    ),
+    pescadorControl.Rule(Distancia["media"] & Curvatura["reta"], Velocidade["media"]),
+    pescadorControl.Rule(Distancia["media"] & Curvatura["leve"], Velocidade["media"]),
+    pescadorControl.Rule(
+        Distancia["media"] & Curvatura["acentuada"], Velocidade["baixa"]
+    ),
+    pescadorControl.Rule(Distancia["longe"] & Curvatura["reta"], Velocidade["alta"]),
+    pescadorControl.Rule(Distancia["longe"] & Curvatura["leve"], Velocidade["media"]),
+    pescadorControl.Rule(
+        Distancia["longe"] & Curvatura["acentuada"], Velocidade["baixa"]
+    ),
+]
 
-#Inicio da Simulação
 
-Fim = pescadorControl.ControlSystem([Regra1, Regra2])
+# Inicio da Simulação
+
+Fim = pescadorControl.ControlSystem(Regras)
 Simu = pescadorControl.ControlSystemSimulation(Fim)
 
-Simu.input['Distancia'] = 8
-Simu.input['Curvatura'] = 40
+Simu.input["Distancia"] = 8
+Simu.input["Curvatura"] = 40
 Simu.compute()
-print(Simu.output['Velocidade'])
 
-import numpy as np
-import skfuzzy as fuzz
-from skfuzzy import control as pescadorControl
+# Saidas e printadas
 
-#Definido as coisas que variam (populamente conhecidas como variaveis)
+print(Simu.output["Velocidade"])
+maior_pertinencia = 0
+categoria = ""
 
-Distancia = pescadorControl.Antecedent(np.arange(0,31,1),"Distancia")     
-Curvatura = pescadorControl.Antecedent(np.arange(0,46,1),"Curvatura")       
+for termo in Velocidade.terms:
+    pertinencia = fuzz.interp_membership(
+        Velocidade.universe, Velocidade[termo].mf, Simu.output["Velocidade"]
+    )
+    print(f"perti: '{termo}': {pertinencia:.3f}")
+    if pertinencia > maior_pertinencia:
+        maior_pertinencia = pertinencia
+        categoria = termo
 
-Velocidade = pescadorControl.Consequent(np.arange(0,101,1), "Velocidade")
+print("É:", categoria)
 
-#Faixas de valores 
-
-Distancia['perto'] = fuzz.trimf(Distancia.universe,[0,5,10])
-Distancia['media'] = fuzz.trimf(Distancia.universe,[9,15,20])
-Distancia['longe'] = fuzz.trimf(Distancia.universe,[19,25,30])
-
-Curvatura['reta'] = fuzz.trimf(Curvatura.universe,[0,7.5,15])
-Curvatura['leve'] = fuzz.trimf(Curvatura.universe,[15,22.5,30])
-Curvatura['acentuada'] = fuzz.trimf(Curvatura.universe,[30,37.5,45])
-
-Velocidade['baixa'] = fuzz.trimf(Velocidade.universe,[0,20,40])
-Velocidade['media'] = fuzz.trimf(Velocidade.universe,[30,50,70])
-Velocidade['alta'] = fuzz.trimf(Velocidade.universe,[60,80,100])
-
-#Regras dos Amigos
-
-Regra1 = pescadorControl.Rule(Distancia['perto'] & Curvatura['acentuada'], Velocidade['baixa'])
-Regra2 = pescadorControl.Rule(Distancia['longe'] & Curvatura['reta'], Velocidade['alta'])
-
-#Inicio da Simulação
-
-Fim = pescadorControl.ControlSystem([Regra1, Regra2])
-Simu = pescadorControl.ControlSystemSimulation(Fim)
-
-Simu.input['Distancia'] = 8
-Simu.input['Curvatura'] = 40
-Simu.compute()
-print(Simu.output['Velocidade'])
-
-valor = Simu.output['Velocidade']
-
-if valor <= 40:
-    categoria = 'baixa'
-elif valor <= 70:
-    categoria = 'media'
-else:
-    categoria = 'alta'
-
-print(categoria)
-
-
+Distancia.view(sim=Simu)
+Curvatura.view(sim=Simu)
+Velocidade.view(sim=Simu)
