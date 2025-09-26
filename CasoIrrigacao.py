@@ -11,17 +11,17 @@ Irrigacao = pescadorControl.Consequent(np.arange(0, 11, 1), "Irrigacao")
 
 # Faixas de valores
 
-Umidade["seca"] = fuzz.trimf(Umidade.universe, [0, 25, 50])
+Umidade["seca"] = fuzz.trimf(Umidade.universe, [0, 0, 50])
 Umidade["media"] = fuzz.trimf(Umidade.universe, [25, 50, 75])
-Umidade["umida"] = fuzz.trimf(Umidade.universe, [50, 75, 100])
+Umidade["umida"] = fuzz.trimf(Umidade.universe, [50, 100, 100])
 
-Temperatura["baixa"] = fuzz.trimf(Temperatura.universe, [0, 10, 20])
+Temperatura["baixa"] = fuzz.trimf(Temperatura.universe, [0, 0, 20])
 Temperatura["media"] = fuzz.trimf(Temperatura.universe, [10, 20, 30])
-Temperatura["alta"] = fuzz.trimf(Temperatura.universe, [20, 30, 40])
+Temperatura["alta"] = fuzz.trimf(Temperatura.universe, [20, 40, 40])
 
-Irrigacao["pouca"] = fuzz.trimf(Irrigacao.universe, [0, 2.5, 5])
+Irrigacao["pouca"] = fuzz.trimf(Irrigacao.universe, [0, 3, 5])
 Irrigacao["moderada"] = fuzz.trimf(Irrigacao.universe, [3, 5, 7])
-Irrigacao["intensa"] = fuzz.trimf(Irrigacao.universe, [5, 7.5, 10])
+Irrigacao["intensa"] = fuzz.trimf(Irrigacao.universe, [5, 7, 10])
 
 # Regras dos Amigos
 
@@ -30,9 +30,7 @@ Regras = [
     pescadorControl.Rule(Umidade["seca"] & Temperatura["media"], Irrigacao["intensa"]),
     pescadorControl.Rule(Umidade["seca"] & Temperatura["alta"], Irrigacao["intensa"]),
     pescadorControl.Rule(Umidade["media"] & Temperatura["baixa"], Irrigacao["pouca"]),
-    pescadorControl.Rule(
-        Umidade["media"] & Temperatura["media"], Irrigacao["moderada"]
-    ),
+    pescadorControl.Rule(Umidade["media"] & Temperatura["media"], Irrigacao["moderada"]),
     pescadorControl.Rule(Umidade["media"] & Temperatura["alta"], Irrigacao["intensa"]),
     pescadorControl.Rule(Umidade["umida"] & Temperatura["baixa"], Irrigacao["pouca"]),
     pescadorControl.Rule(Umidade["umida"] & Temperatura["media"], Irrigacao["pouca"]),

@@ -11,17 +11,17 @@ Qualidade = pescadorControl.Consequent(np.arange(0, 11, 1), "Qualidade")
 
 # Faixas de valores
 
-Espera["curta"] = fuzz.trimf(Espera.universe, [0, 5, 10])
-Espera["média"] = fuzz.trimf(Espera.universe, [10, 15, 20])
-Espera["longa"] = fuzz.trimf(Espera.universe, [20, 25, 30])
+Espera["curta"] = fuzz.trimf(Espera.universe, [0, 6, 12])
+Espera["média"] = fuzz.trimf(Espera.universe, [8, 15, 22])
+Espera["longa"] = fuzz.trimf(Espera.universe, [18, 25, 30])
 
-Satisfacao["baixa"] = fuzz.trimf(Satisfacao.universe, [0, 2.5, 5])
+Satisfacao["baixa"] = fuzz.trimf(Satisfacao.universe, [0, 2, 4])
 Satisfacao["média"] = fuzz.trimf(Satisfacao.universe, [3, 5, 7])
-Satisfacao["alta"] = fuzz.trimf(Satisfacao.universe, [5, 7.5, 10])
+Satisfacao["alta"] = fuzz.trimf(Satisfacao.universe, [6, 8, 10])
 
-Qualidade["ruim"] = fuzz.trimf(Qualidade.universe, [0, 2.5, 5])
+Qualidade["ruim"] = fuzz.trimf(Qualidade.universe, [0, 2, 5])
 Qualidade["aceitavel"] = fuzz.trimf(Qualidade.universe, [3, 5, 7])
-Qualidade["excelente"] = fuzz.trimf(Qualidade.universe, [5, 7.5, 10])
+Qualidade["excelente"] = fuzz.trimf(Qualidade.universe, [5, 7, 10])
 
 # Regras dos Amigos
 

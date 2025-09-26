@@ -11,17 +11,17 @@ Acao = pescadorControl.Consequent(np.arange(0, 11, 1), "Acao")
 
 # Faixas de valores
 
-Cansaco["baixo"] = fuzz.trimf(Cansaco.universe, [0, 2.5, 5])
+Cansaco["baixo"] = fuzz.trimf(Cansaco.universe, [0, 0, 5])
 Cansaco["medio"] = fuzz.trimf(Cansaco.universe, [3, 5, 7])
-Cansaco["alto"] = fuzz.trimf(Cansaco.universe, [5, 7.5, 10])
+Cansaco["alto"] = fuzz.trimf(Cansaco.universe, [5, 10, 10])
 
-Sono["pouco"] = fuzz.trimf(Sono.universe, [0, 2.5, 5])
+Sono["pouco"] = fuzz.trimf(Sono.universe, [0, 0, 5])
 Sono["adequado"] = fuzz.trimf(Sono.universe, [3, 5, 7])
-Sono["muito"] = fuzz.trimf(Sono.universe, [5, 7.5, 10])
+Sono["muito"] = fuzz.trimf(Sono.universe, [5, 10, 10])
 
-Acao["alerta"] = fuzz.trimf(Acao.universe, [0, 2.5, 5])
+Acao["alerta"] = fuzz.trimf(Acao.universe, [0, 2, 5])
 Acao["descanso"] = fuzz.trimf(Acao.universe, [3, 5, 7])
-Acao["forcar_pausa"] = fuzz.trimf(Acao.universe, [5, 7.5, 10])
+Acao["forcar_pausa"] = fuzz.trimf(Acao.universe, [5, 7, 10])
 
 # Regras dos Amigos
 

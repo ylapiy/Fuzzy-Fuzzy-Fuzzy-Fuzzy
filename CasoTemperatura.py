@@ -48,13 +48,13 @@ Simu.compute()
 
 # Saidas e printadas
 
-print(Simu.output["Saida"])
+print(Simu.output['Saida'])
 maior_pertinencia = 0
 categoria = ""
 
 for termo in Saida.terms:
     pertinencia = fuzz.interp_membership(
-        Saida.universe, Saida[termo].mf, Simu.output["Saida"]
+        Qualidade.universe, Saida[termo].mf, Simu.output["Saida"]
     )
     print(f"perti: '{termo}': {pertinencia:.3f}")
     if pertinencia > maior_pertinencia:

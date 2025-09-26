@@ -11,17 +11,17 @@ Velocidade = pescadorControl.Consequent(np.arange(0, 101, 1), "Velocidade")
 
 # Faixas de valores
 
-Distancia["perto"] = fuzz.trimf(Distancia.universe, [0, 5, 10])
-Distancia["media"] = fuzz.trimf(Distancia.universe, [9, 15, 20])
-Distancia["longe"] = fuzz.trimf(Distancia.universe, [19, 25, 30])
+Distancia["perto"] = fuzz.trimf(Distancia.universe, [0, 0, 13])
+Distancia["media"] = fuzz.trimf(Distancia.universe, [10, 15, 20])
+Distancia["longe"] = fuzz.trimf(Distancia.universe, [17, 29, 29])
 
-Curvatura["reta"] = fuzz.trimf(Curvatura.universe, [0, 7.5, 15])
-Curvatura["leve"] = fuzz.trimf(Curvatura.universe, [15, 22.5, 30])
-Curvatura["acentuada"] = fuzz.trimf(Curvatura.universe, [30, 37.5, 45])
+Curvatura["reta"] = fuzz.trimf(Curvatura.universe, [0, 0, 18])
+Curvatura["leve"] = fuzz.trimf(Curvatura.universe, [10, 20, 30])
+Curvatura["acentuada"] = fuzz.trimf(Curvatura.universe, [22, 44, 44])
 
-Velocidade["baixa"] = fuzz.trimf(Velocidade.universe, [0, 20, 40])
+Velocidade["baixa"] = fuzz.trimf(Velocidade.universe, [0, 0, 45])
 Velocidade["media"] = fuzz.trimf(Velocidade.universe, [30, 50, 70])
-Velocidade["alta"] = fuzz.trimf(Velocidade.universe, [60, 80, 100])
+Velocidade["alta"] = fuzz.trimf(Velocidade.universe, [55, 99, 99])
 
 # Regras dos Amigos
 
